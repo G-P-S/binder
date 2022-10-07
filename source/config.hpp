@@ -62,6 +62,7 @@ public:
 
 	std::vector<string> namespaces_to_bind, classes_to_bind, functions_to_bind, namespaces_to_skip, classes_to_skip, functions_to_skip, includes_to_add, includes_to_skip;
 	std::vector<string> buffer_protocols;
+	std::vector<string> module_globals;
 
 	std::map<string, string> const &binders() const { return binders_; }
 	std::map<string, string> const &add_on_binders() const { return add_on_binders_; }
@@ -97,6 +98,7 @@ public:
 	bool is_class_binding_requested(string const &class_) const;
 	bool is_class_skipping_requested(string const &class_) const;
 	bool is_buffer_protocol_requested(string const &class_) const;
+	bool is_module_global_requested(string const &class_) const;
 
 	bool is_include_skipping_requested(string const &include) const;
 

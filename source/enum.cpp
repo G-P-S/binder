@@ -94,7 +94,7 @@ std::string bind_enum(std::string const &module, EnumDecl const *E)
 
 	string maybe_arithmetic = E->isScoped() ? "" : ", pybind11::arithmetic()";
 
-	string r = "\tpybind11::enum_<{}>({}, \"{}\"{}, \"{}\")\n"_format(qualified_name, module, name, maybe_arithmetic, generate_documentation_string_for_declaration(E));
+	string r = "\tpybind11::enum_<{}>({}, \"{}\"{}, \"{}\", pybind11::module_local())\n"_format(qualified_name, module, name, maybe_arithmetic, generate_documentation_string_for_declaration(E));
 
 	// r += "\t // is_bindable " + E->getNameAsString() + " -> " + std::to_string(is_bindable(E)) + "\n";
 

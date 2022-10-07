@@ -1189,10 +1189,15 @@ void ClassBinder::bind(Context &context)
 	if (Config::get().is_buffer_protocol_requested(qualified_name_without_template))
 		buffer_protocol_annotation = ", pybind11::buffer_protocol()";
 
+	// Add buffer module_global if requested (no module_local() added)
+	std::string module_global_annotation = "";
+	if (!Config::get().is_module_global_requested(qualified_name_without_template))
+		module_global_annotation = ", pybind11::module_local()";
+
 	if( named_class )
 		c += '\t' +
-			 R"(pybind11::class_<{}{}{}{}> cl({}, "{}", "{}" {});)"_format(qualified_name, maybe_holder_type, maybe_trampoline, maybe_base_classes(context), module_variable_name, python_class_name(C),
-																		generate_documentation_string_for_declaration(C), buffer_protocol_annotation) +
+			 R"(pybind11::class_<{}{}{}{}> cl({}, "{}", "{}" {} {});)"_format(qualified_name, maybe_holder_type, maybe_trampoline, maybe_base_classes(context), module_variable_name, python_class_name(C),
+																		generate_documentation_string_for_declaration(C), buffer_protocol_annotation, module_global_annotation) +
 			 '\n';
 	// c += "\tpybind11::handle cl_type = cl;\n\n";
 

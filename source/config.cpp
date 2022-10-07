@@ -65,6 +65,7 @@ void Config::read(string const &file_name)
 	string const _include_for_namespace_{"include_for_namespace"};
 
 	string const _buffer_protocol_{"buffer_protocol"};
+	string const _module_global_{"module_global"};
 
 	string const _binder_{"binder"};
 	string const _add_on_binder_{"add_on_binder"};
@@ -157,6 +158,11 @@ void Config::read(string const &file_name)
 		else if( token == _buffer_protocol_ ) {
 			if(bind) {
 				buffer_protocols.push_back(name_without_spaces);
+			}
+		}
+		else if( token == _module_global_ ) {
+			if(bind) {
+				module_globals.push_back(name_without_spaces);
 			}
 		}
 		else if( token == _binder_ ) {
@@ -341,6 +347,20 @@ bool Config::is_buffer_protocol_requested(string const &class__) const
 
 	if( buffer_protocol != buffer_protocols.end() ) {
 		// outs() << "Using buffer protocol for class : " << class_ << "\n";
+		return true;
+	}
+
+	return false;
+}
+
+bool Config::is_module_global_requested(string const &class__) const
+{
+	string class_{class__};
+	class_.erase(std::remove(class_.begin(), class_.end(), ' '), class_.end());
+
+	auto module_global = std::find(module_globals.begin(), module_globals.end(), class_);
+
+	if( module_global != module_globals.end() ) {
 		return true;
 	}
 
