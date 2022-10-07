@@ -100,7 +100,7 @@ string relevant_include(NamedDecl const *decl)
 			for( ; *data and *data != terminator; ++data ) include_string.push_back(*data);
 			if( *data == terminator ) include_string.push_back(*data);
 		}
-		if( include_string.size() and include_string[0] == '"' ) include_string.resize(0); // avoid adding include in quotes because compiler will not be able to find them
+		// if( include_string.size() and include_string[0] == '"' ) include_string.resize(0); // avoid adding include in quotes because compiler will not be able to find them
 	}
 
 	return include_string;
